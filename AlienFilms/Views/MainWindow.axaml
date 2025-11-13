@@ -9,8 +9,16 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="AlienFilms">
 
+    <StackPanel Background="Aqua">
+        <TextBlock Text="Alien Universum Database" Foreground="DarkCyan" Margin="30 " 
+            HorizontalAlignment="Center"  FontSize="20" FontWeight="Bold"/> 
+        
+        
+        
+    </StackPanel>
     
-
+    
+                
     
 
 </Window>
