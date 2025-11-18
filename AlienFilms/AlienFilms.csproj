@@ -24,4 +24,12 @@
         </PackageReference>
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.3.5"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="bin\Debug\net9.0\AlienFilmsData.txt" />
+    </ItemGroup>
 </Project>

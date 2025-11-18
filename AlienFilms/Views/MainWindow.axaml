@@ -3,22 +3,73 @@
         xmlns:vm="using:AlienFilms.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:alienFilms="clr-namespace:AlienFilms"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
         x:Class="AlienFilms.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="AlienFilms">
+        Title="AlienFilms"
+        WindowState="Maximized"
+        >
 
-    <StackPanel Background="Aqua">
-        <TextBlock Text="Alien Universum Database" Foreground="DarkCyan" Margin="30 " 
-            HorizontalAlignment="Center"  FontSize="20" FontWeight="Bold"/> 
-        
-        
-        
-    </StackPanel>
-    
-    
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition   Width="*"/>
+                <ColumnDefinition   Width="*"/>
+                <ColumnDefinition   Width="*"/>
+            </Grid.ColumnDefinitions> 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel  Grid.Column="0" Grid.RowSpan="2" >
+                <TextBlock Text="Alien Universum Database" Foreground="DarkCyan" Margin="30" Padding="10"
+                       HorizontalAlignment="Center"  FontSize="20" FontWeight="Bold"/> 
+            
+                <ListBox ItemsSource="{Binding AlienFilms}" SelectedItem="{Binding SelectedAlienFilm}" CornerRadius="15">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="15">
+                                <StackPanel Orientation="Vertical" Spacing="10" Margin="10" >
+                                    <TextBlock Text="{Binding OriginalTitle}"  FontWeight="Bold" FontSize="30"/>
+                                    <TextBlock Text="{Binding PolishTitle}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" Grid.Row="0">
+                <Button Content="usun"/>
+                <Button Content="dodaj"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <TextBlock Text="{Binding SelectedAlienFilm.OriginalTitle}"  FontWeight="Bold" FontSize="30"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.PolishTitle}"/>
+                <TextBlock Text="{Binding  SelectedAlienFilm.ReleseYear}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.Director}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.Scenario}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.Genre}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.MovieDuration}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.Rating, StringFormat=Ocena Filmu ({0})}"/>
+                <ProgressBar Minimum="0" Maximum="10" Value="{Binding SelectedAlienFilm.Rating}" />
+            </StackPanel>
+            
+            <StackPanel Grid.Column="2" Grid.RowSpan="2" >
                 
-    
+            </StackPanel>
 
+        
+        
+        
+        </Grid>
+    </StackPanel>
 </Window>
+
+
+
+

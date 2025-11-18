@@ -1,6 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using AlienFilms.Models;
+using ReactiveUI;
 
 namespace AlienFilms.ViewModels;
 
@@ -10,7 +12,7 @@ public class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        var lines = File.ReadAllLines("AliendFilmsData.txt");
+        var lines = File.ReadAllLines("AlienFilmsData.txt");
         for (int i = 0; i < lines.Length; i += 13)
         {
             AlienFilms.Add(new AlienFilmsModel()
@@ -23,9 +25,15 @@ public class MainWindowViewModel : ViewModelBase
                 Genre =   lines[i + 5],
                 MovieDuration =  lines[i + 6],
                 Rating = float.Parse( lines[i + 7]),
-                
-                
             });
+            
         }
+    }
+    private AlienFilmsModel _selectedAlienFilm = null;
+
+    public AlienFilmsModel SelectedAlienFilm
+    {
+        get => _selectedAlienFilm;
+        set => this.RaiseAndSetIfChanged(ref _selectedAlienFilm, value);
     }
 }
