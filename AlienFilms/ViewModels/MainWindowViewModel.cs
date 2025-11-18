@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Reactive;
 using AlienFilms.Models;
 using ReactiveUI;
@@ -14,20 +15,20 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<AlienFilmsModel> AlienFilms { get; } = [];
     public ObservableCollection<CharacterModel> Characters { get; } = [];
     
-    public ObservableCollection<CharacterModel> FilteredCharacters { get; } = [];
+    public ObservableCollection<CharacterModel> FilteredCharacters { get; set; } = new ObservableCollection<CharacterModel>();
 
     
-    private AlienFilmsModel _selectedAlienFilm = null;
+    private AlienFilmsModel? _selectedAlienFilm = null;
 
-    public AlienFilmsModel SelectedAlienFilm
+    public AlienFilmsModel? SelectedAlienFilm
     {
         get => _selectedAlienFilm;
         set => this.RaiseAndSetIfChanged(ref _selectedAlienFilm, value);
     }
     
-    private CharacterModel _selectedCharacter = null;
+    private CharacterModel? _selectedCharacter = null;
 
-    public CharacterModel SelectedCharacter
+    public CharacterModel? SelectedCharacter
     {
         get => _selectedCharacter;
         set => this.RaiseAndSetIfChanged(ref _selectedCharacter, value);
@@ -47,11 +48,6 @@ public class MainWindowViewModel : ViewModelBase
     [Reactive] public string NewPlotDescription { get; set; } = string.Empty;
     [Reactive] public string NewFunFact { get; set; } = string.Empty;
 
-
-   
-    
-    
-    
     
     
     public ReactiveCommand<Unit, Unit> AddFilmCommand { get; }
@@ -119,12 +115,12 @@ public class MainWindowViewModel : ViewModelBase
             {
                 OriginalTitle = NewOrginalTitle,
                 PolishTitle = NewPolishTitle,
-                ReleseYear = int.Parse(NewReleseYear.ToString()),
+                ReleseYear = int.Parse(NewReleseYear),
                 Director = NewDirector,
                 Scenario = NewScenario,
                 Genre = NewGenre,
-                MovieDuration = NewMovieDuration.ToString() + " min",
-                Rating = float.Parse(NewRating.ToString()),
+                MovieDuration = NewMovieDuration + " min",
+                Rating = float.Parse(NewRating),
                 MainCharacters = NewMainCharacters,
                 Ship =  NewShip,
                 PlotDescription = NewPlotDescription,
@@ -142,6 +138,39 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
-        
+        ShowCharactersCommand = ReactiveCommand.Create(() =>
+        {
+            FilteredCharacters.Clear();
+
+            if (SelectedAlienFilm == null)
+                return;
+
+            foreach (var character in Characters)
+            {
+                if (string.IsNullOrEmpty(character.Films))
+                    continue;
+
+                
+                var films = character.Films.Split(',');
+                foreach (var film in films)
+                {
+                    if (film.Trim() == SelectedAlienFilm.OriginalTitle)
+                    {
+                        
+                        if (!string.IsNullOrEmpty(SelectedRace) && SelectedRace != "Wszystkie postacie")
+                        {
+                            if (character.Race.Contains(SelectedRace))
+                                FilteredCharacters.Add(character);
+                        }
+                        else
+                        {
+                            FilteredCharacters.Add(character);
+                        }
+                        break; 
+                    }
+                }
+            }
+        });
+
     }
 }
