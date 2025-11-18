@@ -28,11 +28,11 @@
                 <TextBlock Text="Alien Universum Database" Foreground="DarkCyan" Margin="30" Padding="10"
                        HorizontalAlignment="Center"  FontSize="20" FontWeight="Bold"/> 
             
-                <ListBox ItemsSource="{Binding AlienFilms}" SelectedItem="{Binding SelectedAlienFilm}" CornerRadius="15">
+                <ListBox ItemsSource="{Binding AlienFilms}" SelectedItem="{Binding SelectedAlienFilm}" CornerRadius="15" Margin="30">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius="15">
-                                <StackPanel Orientation="Vertical" Spacing="10" Margin="10" >
+                            <Border CornerRadius="15" >
+                                <StackPanel Orientation="Vertical" Spacing="10" Margin="10"  >
                                     <TextBlock Text="{Binding OriginalTitle}"  FontWeight="Bold" FontSize="30"/>
                                     <TextBlock Text="{Binding PolishTitle}"/>
                                 </StackPanel>
@@ -42,21 +42,38 @@
                 </ListBox>
             </StackPanel>
             
-            <StackPanel Grid.Column="1" Grid.Row="0">
-                <Button Content="usun"/>
-                <Button Content="dodaj"/>
+            <StackPanel Grid.Column="1" Grid.Row="0" Spacing="10" Margin="20" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="dodaj" Padding="20" Command="{Binding AddFilmCommand}"/>
+                    <Button Content="usun" Padding="20" Command="{Binding RemoveFilmCommand}" CommandParameter="{Binding SelectedAlienFilm}"/>
+                </StackPanel>
+                <TextBox Text="{Binding NewOrginalTitle}" Watermark="Wpisz orgianlny tytuł..." />
+                <TextBox Text="{Binding NewPolishTitle}" Watermark="Wpisz polski tytuł..."/>
+                <TextBox Text="{Binding NewReleseYear}" Watermark="Wpisz rok produkcji..."/>
+                <TextBox Text="{Binding NewDirector}" Watermark="Wpisz Reżysera..."/>
+                <TextBox Text="{Binding NewScenario}" Watermark="Wpisz Scenarzyste..."/>
+                <TextBox Text="{Binding NewGenre}" Watermark="Wpisz gatunek filmu..."/>
+                <TextBox Text="{Binding NewMovieDuration}" Watermark="Czas trwania filmu..."/>
+                <TextBox Text="{Binding NewRating}" Watermark="Wpisz ocene..."/> 
+                <TextBox Text="{Binding NewMainCharacters}" Watermark="Wpisz głównych bohaterów..."/>
+                <TextBox Text="{Binding NewPlotDescription}" Watermark="Wpisz głowna fabułe..."/>
+                <TextBox Text="{Binding NewFunFact}" Watermark="Wpisz ciekawostke..."/>
             </StackPanel>
             
             <StackPanel Grid.Column="1" Grid.Row="1">
                 <TextBlock Text="{Binding SelectedAlienFilm.OriginalTitle}"  FontWeight="Bold" FontSize="30"/>
-                <TextBlock Text="{Binding SelectedAlienFilm.PolishTitle}"/>
-                <TextBlock Text="{Binding  SelectedAlienFilm.ReleseYear}"/>
-                <TextBlock Text="{Binding SelectedAlienFilm.Director}"/>
-                <TextBlock Text="{Binding SelectedAlienFilm.Scenario}"/>
-                <TextBlock Text="{Binding SelectedAlienFilm.Genre}"/>
-                <TextBlock Text="{Binding SelectedAlienFilm.MovieDuration}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.PolishTitle, StringFormat=Polski tytuł: {0}}"/>
+                <TextBlock Text="{Binding  SelectedAlienFilm.ReleseYear, StringFormat= Rok produkcji: {0}}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.Director, StringFormat= Reżyser: {0} }"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.Scenario, StringFormat=Scenarzysta: {0}}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.Genre, StringFormat=Gatunek: {0}} "/>
+                <TextBlock Text="{Binding SelectedAlienFilm.MovieDuration, StringFormat=Czas trwania: {0}}"/>
                 <TextBlock Text="{Binding SelectedAlienFilm.Rating, StringFormat=Ocena Filmu ({0})}"/>
                 <ProgressBar Minimum="0" Maximum="10" Value="{Binding SelectedAlienFilm.Rating}" />
+                <TextBlock Text="{Binding SelectedAlienFilm.MainCharacters, StringFormat=Głowne postacie: {0}}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.Ship, StringFormat=Statek: {0}}"/>
+                <TextBlock Text="{Binding SelectedAlienFilm.PlotDescription, StringFormat=Opis fabuły: {0}}" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding SelectedAlienFilm.FunFact, StringFormat=Ciekawostka: {0}}" TextWrapping="Wrap"/>
             </StackPanel>
             
             <StackPanel Grid.Column="2" Grid.RowSpan="2" >
