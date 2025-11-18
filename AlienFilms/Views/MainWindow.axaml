@@ -74,6 +74,7 @@
                 <TextBlock Text="{Binding SelectedAlienFilm.Ship, StringFormat=Statek: {0}}"/>
                 <TextBlock Text="{Binding SelectedAlienFilm.PlotDescription, StringFormat=Opis fabuły: {0}}" TextWrapping="Wrap" />
                 <TextBlock Text="{Binding SelectedAlienFilm.FunFact, StringFormat=Ciekawostka: {0}}" TextWrapping="Wrap"/>
+                <Button Content="Pokaz postacie grajace w tym filmie"/>
             </StackPanel>
             
             <StackPanel Grid.Column="2" Grid.RowSpan="2" >

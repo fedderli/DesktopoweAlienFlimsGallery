@@ -33,4 +33,8 @@
     <ItemGroup>
       <None Include="bin\Debug\net9.0\AlienFilmsData.txt" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="bin\Debug\net9.0\CharactersData.txt" />
+    </ItemGroup>
 </Project>
