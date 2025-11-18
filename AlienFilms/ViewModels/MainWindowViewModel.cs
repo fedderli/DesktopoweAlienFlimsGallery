@@ -12,6 +12,9 @@ namespace AlienFilms.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<AlienFilmsModel> AlienFilms { get; } = [];
+    public ObservableCollection<CharacterModel> Characters { get; } = [];
+    
+    public ObservableCollection<CharacterModel> FilteredCharacters { get; } = [];
 
     
     private AlienFilmsModel _selectedAlienFilm = null;
@@ -20,6 +23,14 @@ public class MainWindowViewModel : ViewModelBase
     {
         get => _selectedAlienFilm;
         set => this.RaiseAndSetIfChanged(ref _selectedAlienFilm, value);
+    }
+    
+    private CharacterModel _selectedCharacter = null;
+
+    public CharacterModel SelectedCharacter
+    {
+        get => _selectedCharacter;
+        set => this.RaiseAndSetIfChanged(ref _selectedCharacter, value);
     }
     
     
@@ -35,10 +46,28 @@ public class MainWindowViewModel : ViewModelBase
     [Reactive] public string NewShip { get; set; } = string.Empty;
     [Reactive] public string NewPlotDescription { get; set; } = string.Empty;
     [Reactive] public string NewFunFact { get; set; } = string.Empty;
+
+
+   
+    
+    
+    
     
     
     public ReactiveCommand<Unit, Unit> AddFilmCommand { get; }
     public ReactiveCommand<AlienFilmsModel?, Unit> RemoveFilmCommand { get; }
+    public ReactiveCommand<Unit, Unit> ShowCharactersCommand { get; }
+    public ObservableCollection<string> Races { get; } =
+    [
+        "Wszystkie postacie",
+        "Człowiek",
+        "Android",
+        "Obcy",
+        "Hybryda",
+        "Inżynier"
+     ]; 
+    
+    [Reactive] public string SelectedRace { get; set; } = string.Empty;
     
     
     
@@ -64,7 +93,25 @@ public class MainWindowViewModel : ViewModelBase
                 FunFact = lines[i + 11],
             });
         }
-
+        
+        var linesC = File.ReadAllLines("CharactersData.txt");
+        for (int i = 0; i < linesC.Length; i += 11)
+        {
+            Characters.Add(new CharacterModel()
+            {
+                CharacterName =  linesC[i],
+                Films = linesC[i + 1],
+                Role = linesC[i + 2],
+                Actor = linesC[i + 3],
+                Race = linesC[i + 4],
+                BirthYear = linesC[i + 5],
+                CrewFunction = linesC[i + 6],
+                Characteristic =  linesC[i + 7],
+                Fate =  linesC[i + 8],
+                ChatacterFunFact =  linesC[i + 9],
+            });
+        }
+        
         AddFilmCommand = ReactiveCommand.Create(() =>
         {
             if (string.IsNullOrEmpty(NewOrginalTitle)) return;
@@ -95,5 +142,6 @@ public class MainWindowViewModel : ViewModelBase
             }
         });
 
+        
     }
 }

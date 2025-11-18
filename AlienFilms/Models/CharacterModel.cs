@@ -7,7 +7,7 @@ public class CharacterModel
     public string? Role  { get; set; } = "";
     public string? Actor { get; set; } = "";
     public string? Race { get; set; } = "";
-    public int BirthYear { get; set; } = 0;
+    public string? BirthYear { get; set; } = "";
     public string? CrewFunction { get; set; } = "";
     public string? Characteristic { get; set; } = "";
     public string? Fate { get; set; } = "";

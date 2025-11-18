@@ -56,11 +56,12 @@
                 <TextBox Text="{Binding NewMovieDuration}" Watermark="Czas trwania filmu..."/>
                 <TextBox Text="{Binding NewRating}" Watermark="Wpisz ocene..."/> 
                 <TextBox Text="{Binding NewMainCharacters}" Watermark="Wpisz głównych bohaterów..."/>
+                <TextBox Text="{Binding NewShip}" Watermark="Wpisz nazwe statku..."/>
                 <TextBox Text="{Binding NewPlotDescription}" Watermark="Wpisz głowna fabułe..."/>
                 <TextBox Text="{Binding NewFunFact}" Watermark="Wpisz ciekawostke..."/>
             </StackPanel>
             
-            <StackPanel Grid.Column="1" Grid.Row="1">
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="20">
                 <TextBlock Text="{Binding SelectedAlienFilm.OriginalTitle}"  FontWeight="Bold" FontSize="30"/>
                 <TextBlock Text="{Binding SelectedAlienFilm.PolishTitle, StringFormat=Polski tytuł: {0}}"/>
                 <TextBlock Text="{Binding  SelectedAlienFilm.ReleseYear, StringFormat= Rok produkcji: {0}}"/>
@@ -74,11 +75,40 @@
                 <TextBlock Text="{Binding SelectedAlienFilm.Ship, StringFormat=Statek: {0}}"/>
                 <TextBlock Text="{Binding SelectedAlienFilm.PlotDescription, StringFormat=Opis fabuły: {0}}" TextWrapping="Wrap" />
                 <TextBlock Text="{Binding SelectedAlienFilm.FunFact, StringFormat=Ciekawostka: {0}}" TextWrapping="Wrap"/>
-                <Button Content="Pokaz postacie grajace w tym filmie"/>
+                <Button Content="Pokaz postacie grajace w tym filmie" Command="{Binding ShowCharactersCommand}"/>
             </StackPanel>
             
-            <StackPanel Grid.Column="2" Grid.RowSpan="2" >
-                
+            <StackPanel Grid.Column="2" Grid.Row="0"  Margin="20">
+                <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Wybierz rase postaci"/>
+                <ComboBox Padding="10" Margin="0 0 0 20" SelectedIndex="0" ItemsSource="{Binding Races}" 
+                          SelectedItem="{Binding SelectedRace}" >
+
+                </ComboBox>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding FilteredCharacters}" SelectedItem="{Binding SelectedCharacter}" CornerRadius="15" Padding="10">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="15">
+                                <StackPanel>
+                                    <TextBlock  Text="{Binding CharacterName}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Grid.Row="1" Margin="20">
+                <TextBlock Text="{Binding SelectedCharacter.CharacterName}" FontWeight="Bold" FontSize="20"/>
+                <TextBlock Text="{Binding SelectedCharacter.Films, StringFormat=Filmy: {0}}"/>
+                <TextBlock Text="{Binding SelectedCharacter.Role, StringFormat=Rola w Filmie: {0}}"/>
+                <TextBlock Text="{Binding SelectedCharacter.Actor, StringFormat=Actor: {0}}"/>
+                <TextBlock Text="{Binding SelectedCharacter.Race, StringFormat=Rasa: {0}}"/>
+                <TextBlock Text="{Binding SelectedCharacter.BirthYear , StringFormat=Rok urodzenia(filmowy): {0}}"/>
+                <TextBlock Text="{Binding SelectedCharacter.CrewFunction, StringFormat=Funkcja w salodze: {0}}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding SelectedCharacter.Characteristic, StringFormat=Charakterystyka: {0}}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding SelectedCharacter.Fate, StringFormat=Los postaci: {0}}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding SelectedCharacter.ChatacterFunFact, StringFormat=Ciekawostka: {0}}" TextWrapping="Wrap"/>
             </StackPanel>
 
         
